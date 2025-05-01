@@ -1,10 +1,10 @@
 <?php
 
-namespace Byancode\RemoteConfig;
+namespace Byancode\RemoteConfig\Facades;
 
-use Illuminate\Support\Facades\Facade as BaseFacade;
+use Illuminate\Support\Facades\Facade;
 
-class Facade extends BaseFacade
+class RemoteConfig extends Facade
 {
     /**
      * Get the registered name of the component.

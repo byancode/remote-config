@@ -1,14 +1,12 @@
 <?php
 
-namespace Byancode\RemoteConfig;
+namespace Byancode\RemoteConfig\Models;
 
 use Illuminate\Database\Eloquent\Model as BaseModel;
 
-class Model extends BaseModel
+class RemoteConfig extends BaseModel
 {
     public $timestamps = false;
-
-    protected $table = 'remote_configs';
 
     protected $fillable = [
         'key',

@@ -2,10 +2,10 @@
 
 namespace Byancode\RemoteConfig;
 
-use Byancode\RemoteConfig\Model;
+use Byancode\RemoteConfig\Models\RemoteConfig;
 use Illuminate\Support\Facades\Cache;
 
-class Manager
+class RemoteConfigManager
 {
     protected $cacheKey;
     protected $cacheStore;
@@ -20,7 +20,7 @@ class Manager
     public function load()
     {
         try {
-            return Model::get()->mapWithKeys(function ($item) {
+            return RemoteConfig::get()->mapWithKeys(function ($item) {
                 return [$item['key'] => $item['value']];
             })->all();
         } catch (\Throwable $th) {
@@ -62,7 +62,7 @@ class Manager
         $this->cacheStore->forever($this->cacheKey, $settings);
         # -------------------------
         try {
-            Model::getQuery()->updateOrInsert(
+            RemoteConfig::getQuery()->updateOrInsert(
                 compact('key'),
                 compact('value')
             );

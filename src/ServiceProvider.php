@@ -2,10 +2,10 @@
 
 namespace Byancode\RemoteConfig;
 
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Illuminate\Support\Facades\Blade;
 
-class Provider extends ServiceProvider
+class ServiceProvider extends BaseServiceProvider
 {
     /**
      * Bootstrap the application events.
@@ -22,7 +22,7 @@ class Provider extends ServiceProvider
         ], 'remote_config');
 
         $this->app->singleton('remote_config', function () {
-            return new Manager();
+            return new RemoteConfigManager();
         });
 
         $this->app->booted(function () {

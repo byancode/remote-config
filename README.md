@@ -1,49 +1,77 @@
 # Laravel Remote Config
 
-This package allows you to save the configuration in a more persistent way. Use the database to save your settings, you can save values in json format. You can also override the Laravel configuration.
+Este paquete le permite guardar la configuración de manera más persistente. Utiliza la base de datos para almacenar sus ajustes, y puede guardar valores en formato JSON. También puede sobrescribir la configuración estándar de Laravel.
 
-## Getting Started
+## Requisitos
 
-### 1. Install
+- PHP 7.4 o superior
+- Laravel 6.0 o superior (incluye soporte para Laravel 11 y 12)
 
-Run the following command:
+## Instalación
+
+### 1. Instalar
+
+Ejecute el siguiente comando:
 
 ```bash
 composer require byancode/remote-config
 ```
 
-### 2. Register (for Laravel > 6.0)
+### 2. Registro
 
-Register the service provider in `config/app.php`
+#### Para Laravel 6.0 - Laravel 10.x
 
-```php
-Byancode\RemoteConfig\Provider::class,
-```
-
-Add alias if you want to use the facade.
+Registre el proveedor de servicios en `config/app.php`
 
 ```php
-'RemoteConfig' => Byancode\RemoteConfig\Facade::class,
+Byancode\RemoteConfig\ServiceProvider::class,
 ```
 
-### 3. Publish
+Agregue el alias si desea utilizar la fachada (facade).
 
-Publish config file.
+```php
+'RemoteConfig' => Byancode\RemoteConfig\Facades\RemoteConfig::class,
+```
+
+#### Para Laravel 11.x y posteriores
+
+En Laravel 11 y versiones posteriores, los proveedores de servicios se registran en el archivo `bootstrap/providers.php`:
+
+```php
+return [
+    // Proveedores de servicios de aplicación...
+    Byancode\RemoteConfig\ServiceProvider::class,
+
+    // Proveedores de servicios diferidos...
+];
+```
+
+Para registrar el alias de la fachada, debe hacerlo en el archivo `config/app.php`:
+
+```php
+'aliases' => [
+    // ...
+    'RemoteConfig' => Byancode\RemoteConfig\Facades\RemoteConfig::class,
+],
+```
+
+### 3. Publicación de archivos
+
+Publique el archivo de configuración:
 
 ```bash
-php artisan vendor:publish --provider="Byancode\RemoteConfig\Provider"
+php artisan vendor:publish --provider="Byancode\RemoteConfig\ServiceProvider"
 ```
 
+### 4. Configuración
 
-### 4. Configure
+Puede cambiar las opciones de su aplicación desde el archivo `config/remote_config.php`
 
-You can change the options of your app from `config/remote_config.php` file
+## Uso
 
-## Usage
+Puede utilizar tanto el método helper `remote_config('foo')` como la fachada `RemoteConfig::get('foo')`
 
-You can either use the helper method like `remote_config('foo')` or the facade `RemoteConfig::get('foo')`
-
-### Facade
+### Fachada (Facade)
 
 ```php
 # GETTER
@@ -75,6 +103,35 @@ $remoteConfig->foo__bar = 'test';
 $remoteConfig->set('foo.bar', 'test');
 ```
 
-### Blade Directive
+### Directiva Blade
 
-You can get the remote_config directly in your blade templates using the helper method or the blade directive like `@remote_config('foo')`
+Puede obtener la configuración remota directamente en sus plantillas blade utilizando el método helper o la directiva blade como `@remote_config('foo')`
+
+## Compatibilidad con versiones de Laravel
+
+| Versión de Laravel | Estado            |
+|--------------------|-------------------|
+| 6.x - 10.x         | Compatible        |
+| 11.x - 12.x        | Compatible        |
+
+## Solución de problemas comunes
+
+### Configuración no disponible en algunos entornos
+
+Si encuentra que sus configuraciones no están disponibles en ciertos entornos, verifique que las migraciones se hayan ejecutado correctamente:
+
+```bash
+php artisan migrate
+```
+
+### Conflictos con cache de configuración
+
+En algunas situaciones, puede ser necesario limpiar la cache de configuración:
+
+```bash
+php artisan config:clear
+```
+
+## Licencia
+
+Este paquete es software de código abierto licenciado bajo la [Licencia MIT](LICENSE.md).

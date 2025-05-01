@@ -25,10 +25,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Byancode\\RemoteConfig\\Provider"
+                "Byancode\\RemoteConfig\\ServiceProvider"
             ],
             "aliases": {
-                "Settings": "Byancode\\RemoteConfig\\Facade"
+                "RemoteConfig": "Byancode\\RemoteConfig\\Facades\\RemoteConfig"
             }
         }
     }
