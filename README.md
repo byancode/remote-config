@@ -1,77 +1,68 @@
 # Laravel Remote Config
 
-Este paquete le permite guardar la configuración de manera más persistente. Utiliza la base de datos para almacenar sus ajustes, y puede guardar valores en formato JSON. También puede sobrescribir la configuración estándar de Laravel.
+This package allows you to store configuration in a more persistent way. It uses the database to store your settings, and can save values in JSON format. You can also override Laravel's standard configuration.
 
-## Requisitos
+## Requirements
 
-- PHP 7.4 o superior
-- Laravel 6.0 o superior (incluye soporte para Laravel 11 y 12)
+- PHP 7.4 or higher
+- Laravel 6.0 or higher (includes support for Laravel 11 and 12)
 
-## Instalación
+## Installation
 
-### 1. Instalar
+### 1. Install
 
-Ejecute el siguiente comando:
+Run the following command:
 
 ```bash
 composer require byancode/remote-config
 ```
 
-### 2. Registro
+### 2. Registration
 
-#### Para Laravel 6.0 - Laravel 10.x
+#### For Laravel 6.0 - Laravel 10.x
 
-Registre el proveedor de servicios en `config/app.php`
+Register the service provider in `config/app.php`
 
 ```php
 Byancode\RemoteConfig\ServiceProvider::class,
 ```
 
-Agregue el alias si desea utilizar la fachada (facade).
+Add the alias if you want to use the facade.
 
 ```php
 'RemoteConfig' => Byancode\RemoteConfig\Facades\RemoteConfig::class,
 ```
 
-#### Para Laravel 11.x y posteriores
+#### For Laravel 11.x and later
 
-En Laravel 11 y versiones posteriores, los proveedores de servicios se registran en el archivo `bootstrap/providers.php`:
+In Laravel 11 and later versions, service providers are registered in the `bootstrap/providers.php` file:
 
 ```php
 return [
-    // Proveedores de servicios de aplicación...
+    // Application service providers...
     Byancode\RemoteConfig\ServiceProvider::class,
 
-    // Proveedores de servicios diferidos...
+    // Deferred service providers...
 ];
 ```
 
-Para registrar el alias de la fachada, debe hacerlo en el archivo `config/app.php`:
+### 3. Publishing files
 
-```php
-'aliases' => [
-    // ...
-    'RemoteConfig' => Byancode\RemoteConfig\Facades\RemoteConfig::class,
-],
-```
-
-### 3. Publicación de archivos
-
-Publique el archivo de configuración:
+Publish the configuration file:
 
 ```bash
 php artisan vendor:publish --provider="Byancode\RemoteConfig\ServiceProvider"
 ```
 
-### 4. Configuración
+### 4. Configuration
 
-Puede cambiar las opciones de su aplicación desde el archivo `config/remote_config.php`
+You can change your application options from the `config/remote_config.php` file
 
-## Uso
+## Usage
 
-Puede utilizar tanto el método helper `remote_config('foo')` como la fachada `RemoteConfig::get('foo')`
+You can use both the helper method `remote_config('foo')` and the facade `RemoteConfig::get('foo')`
 
-### Fachada (Facade)
+### Facade
 
 ```php
 # GETTER
@@ -103,35 +94,35 @@ $remoteConfig->foo__bar = 'test';
 $remoteConfig->set('foo.bar', 'test');
 ```
 
-### Directiva Blade
+### Blade Directive
 
-Puede obtener la configuración remota directamente en sus plantillas blade utilizando el método helper o la directiva blade como `@remote_config('foo')`
+You can get remote configuration directly in your blade templates using the helper method or the blade directive as `@remote_config('foo')`
 
-## Compatibilidad con versiones de Laravel
+## Laravel Version Compatibility
 
-| Versión de Laravel | Estado            |
-|--------------------|-------------------|
-| 6.x - 10.x         | Compatible        |
-| 11.x - 12.x        | Compatible        |
+| Laravel Version   | Status           |
+|-------------------|------------------|
+| 6.x - 10.x        | Compatible       |
+| 11.x - 12.x       | Compatible       |
 
-## Solución de problemas comunes
+## Troubleshooting Common Issues
 
-### Configuración no disponible en algunos entornos
+### Configuration not available in some environments
 
-Si encuentra que sus configuraciones no están disponibles en ciertos entornos, verifique que las migraciones se hayan ejecutado correctamente:
+If you find that your configurations are not available in certain environments, check that the migrations have been executed correctly:
 
 ```bash
 php artisan migrate
 ```
 
-### Conflictos con cache de configuración
+### Conflicts with configuration cache
 
-En algunas situaciones, puede ser necesario limpiar la cache de configuración:
+In some situations, it may be necessary to clear the configuration cache:
 
 ```bash
 php artisan config:clear
 ```
 
-## Licencia
+## License
 
-Este paquete es software de código abierto licenciado bajo la [Licencia MIT](LICENSE.md).
+This package is open-source software licensed under the [MIT License](LICENSE.md).
