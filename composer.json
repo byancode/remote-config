@@ -1,0 +1,35 @@
+{
+    "name": "byancode/remote-config",
+    "description": "Remote config for Laravel",
+    "keywords": ["laravel", "persistent", "remote", "config", "json"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Byancode",
+            "email": "byancode@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=8.0",
+        "laravel/framework": ">=6.0"
+    },
+    "require-dev": {},
+    "autoload": {
+        "psr-4": {
+            "Byancode\\RemoteConfig\\": "src/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Byancode\\RemoteConfig\\Provider"
+            ],
+            "aliases": {
+                "Settings": "Byancode\\RemoteConfig\\Facade"
+            }
+        }
+    }
+}
